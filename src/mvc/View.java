@@ -14,14 +14,14 @@ public class View extends JPanel implements Subscriber {
     }
     @Override
     public void update() {
-        //this.repaint();
+        this.repaint();
     }
 
    public void setModel(Model newModel) {
         this.model.unsubscribe(this);
         this.model = newModel;
         this.model.subscribe(this);
-        //this.repaint();
+
    }
 
 }

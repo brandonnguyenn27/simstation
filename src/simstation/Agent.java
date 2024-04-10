@@ -9,7 +9,7 @@ public abstract class Agent implements Runnable, Serializable {
     private int xc, yc;
     private boolean suspended = false;
     private boolean stopped = false;
-    private Thread myThread;
+    transient protected Thread myThread;
 
     public Agent(String name) {
         this.name = name;

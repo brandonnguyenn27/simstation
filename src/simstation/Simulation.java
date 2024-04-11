@@ -70,6 +70,10 @@ public class Simulation extends Model {
         // empty method that will be specified in subclasses
     }
 
+    public Agent[] getAgents() {
+        return agents.toArray(new Agent[0]);
+    }
+
     private class ClockUpdater extends TimerTask {
         @Override
         public void run() {

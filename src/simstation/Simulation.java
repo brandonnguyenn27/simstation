@@ -7,6 +7,27 @@ import java.util.*;
 public class Simulation extends Model {
     transient private Timer timer;
     private int clock = 0;
+
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
+    }
+
+    public int getClock() {
+        return clock;
+    }
+
+    public void setClock(int clock) {
+        this.clock = clock;
+    }
+
+    public void setAgents(List<Agent> agents) {
+        this.agents = agents;
+    }
+
     private List<Agent> agents;
     public void startTimer() {
         timer = new Timer();

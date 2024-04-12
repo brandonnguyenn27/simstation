@@ -17,7 +17,7 @@ public class Simulation extends Model {
         super();
         running = false;
         suspended = false;
-        agents = new LinkedList<Agent>();
+        agents = new ArrayList<Agent>();
         clock = 0;
 
     }

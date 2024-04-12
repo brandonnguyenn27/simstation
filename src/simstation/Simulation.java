@@ -10,9 +10,13 @@ public class Simulation extends Model {
     transient private Timer timer;
     private int clock;
     private List<Agent> agents;
+    private boolean running;
+    private boolean suspended;
 
     public Simulation() {
         super();
+        running = false;
+        suspended = false;
         agents = new LinkedList<Agent>();
         clock = 0;
 
@@ -35,6 +39,8 @@ public class Simulation extends Model {
         for (Agent a : agents) {
             a.start();
         }
+        running = true;
+        suspended = false;
         changed();
     }
 
@@ -43,6 +49,7 @@ public class Simulation extends Model {
         for (Agent a : agents) {
             a.suspend();
         }
+        suspended = true;
         changed();
     }
 
@@ -51,6 +58,7 @@ public class Simulation extends Model {
         for (Agent a : agents) {
             a.resume();
         }
+        suspended = false;
         changed();
     }
 
@@ -59,6 +67,8 @@ public class Simulation extends Model {
         for (Agent a : agents) {
             a.stop();
         }
+        running = false;
+        suspended = false;
         changed();
     }
 
@@ -104,6 +114,18 @@ public class Simulation extends Model {
 
     public void setAgents(List<Agent> agents) {
         this.agents = agents;
+    }
+
+    public int getAgentsSize() {
+        return agents.size();
+    }
+
+    public boolean running() {
+        return running;
+    }
+
+    public boolean suspended() {
+        return suspended;
     }
 
     private class ClockUpdater extends TimerTask {

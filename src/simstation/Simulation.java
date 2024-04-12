@@ -5,30 +5,19 @@ import mvc.Utilities;
 
 import java.util.*;
 public class Simulation extends Model {
+
+    protected static int SIZE = 250;
     transient private Timer timer;
-    private int clock = 0;
-
-    public Timer getTimer() {
-        return timer;
-    }
-
-    public void setTimer(Timer timer) {
-        this.timer = timer;
-    }
-
-    public int getClock() {
-        return clock;
-    }
-
-    public void setClock(int clock) {
-        this.clock = clock;
-    }
-
-    public void setAgents(List<Agent> agents) {
-        this.agents = agents;
-    }
-
+    private int clock;
     private List<Agent> agents;
+
+    public Simulation() {
+        super();
+        agents = new LinkedList<Agent>();
+        clock = 0;
+
+    }
+
     public void startTimer() {
         timer = new Timer();
         timer.scheduleAtFixedRate(new ClockUpdater(), 1000, 1000);
@@ -39,8 +28,10 @@ public class Simulation extends Model {
     }
 
     public void start() {
+        this.clock = 0;
         populate();
         startTimer();
+        agents.clear();
         for (Agent a : agents) {
             a.start();
         }
@@ -71,19 +62,19 @@ public class Simulation extends Model {
         changed();
     }
 
-    private Agent getNeighbor(Agent a, double radius) {
-        if (agents.size() == 0) {
-            return null;
-        }
-        int startIdx = Utilities.rng.nextInt(agents.size());
-        int index = startIdx;
-        do {
-            Agent neighbor = agents.get(index);
-            if (!neighbor.equals(a) && a.distance(neighbor) < radius) { // is the radius inclusive?
-                return neighbor;
+    public void addAgent(Agent ag) {
+        ag.xc = Utilities.rng.nextInt(SIZE);
+        ag.yc = Utilities.rng.nextInt(SIZE);
+        agents.add(ag);
+        ag.setSimulation(this);
+    }
+
+    public synchronized Agent getNeighbor(Agent a, double radius) {
+        for (Agent other : agents) {
+            if (other != a && a.distance(other) < radius) {
+                return other;
             }
-            index = (index + 1) % agents.size(); // wrap around
-        } while (startIdx != index);
+        }
         return null;
     }
 
@@ -95,11 +86,30 @@ public class Simulation extends Model {
         return agents.toArray(new Agent[0]);
     }
 
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
+    }
+
+    public int getClock() {
+        return clock;
+    }
+
+    public void setClock(int clock) {
+        this.clock = clock;
+    }
+
+    public void setAgents(List<Agent> agents) {
+        this.agents = agents;
+    }
+
     private class ClockUpdater extends TimerTask {
         @Override
         public void run() {
             clock++;
-            //changed();
         }
     }
 

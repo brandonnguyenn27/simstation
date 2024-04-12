@@ -9,7 +9,7 @@ public class Simulation extends Model {
     protected static int SIZE = 250;
     transient private Timer timer;
     private int clock;
-    private List<Agent> agents;
+    private ArrayList<Agent> agents;
     private boolean running;
     private boolean suspended;
 
@@ -17,7 +17,7 @@ public class Simulation extends Model {
         super();
         running = false;
         suspended = false;
-        agents = new ArrayList<Agent>();
+        agents = new ArrayList<>();
         clock = 0;
 
     }
@@ -92,8 +92,8 @@ public class Simulation extends Model {
         // empty method that will be specified in subclasses
     }
 
-    public Agent[] getAgents() {
-        return agents.toArray(new Agent[0]);
+    public ArrayList<Agent> getAgents() {
+        return agents;
     }
 
     public Timer getTimer() {
@@ -112,7 +112,7 @@ public class Simulation extends Model {
         this.clock = clock;
     }
 
-    public void setAgents(List<Agent> agents) {
+    public void setAgents(ArrayList<Agent> agents) {
         this.agents = agents;
     }
 

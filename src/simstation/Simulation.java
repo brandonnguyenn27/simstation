@@ -1,10 +1,33 @@
 package simstation;
 
 import mvc.Model;
+import mvc.Utilities;
+
 import java.util.*;
 public class Simulation extends Model {
     transient private Timer timer;
-    private int clock;
+    private int clock = 0;
+
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
+    }
+
+    public int getClock() {
+        return clock;
+    }
+
+    public void setClock(int clock) {
+        this.clock = clock;
+    }
+
+    public void setAgents(List<Agent> agents) {
+        this.agents = agents;
+    }
+
     private List<Agent> agents;
     public void startTimer() {
         timer = new Timer();
@@ -15,14 +38,61 @@ public class Simulation extends Model {
         timer.purge();
     }
 
+    public void start() {
+        populate();
+        startTimer();
+        for (Agent a : agents) {
+            a.start();
+        }
+        changed();
+    }
 
-    private void getNeighbor(Agent a, double radius) {
+    public void suspend() {
+        stopTimer();
+        for (Agent a : agents) {
+            a.suspend();
+        }
+        changed();
+    }
 
+    public void resume() {
+        startTimer();
+        for (Agent a : agents) {
+            a.resume();
+        }
+        changed();
+    }
 
+    public void stop() {
+        stopTimer();
+        for (Agent a : agents) {
+            a.stop();
+        }
+        changed();
+    }
+
+    private Agent getNeighbor(Agent a, double radius) {
+        if (agents.size() == 0) {
+            return null;
+        }
+        int startIdx = Utilities.rng.nextInt(agents.size());
+        int index = startIdx;
+        do {
+            Agent neighbor = agents.get(index);
+            if (!neighbor.equals(a) && a.distance(neighbor) < radius) { // is the radius inclusive?
+                return neighbor;
+            }
+            index = (index + 1) % agents.size(); // wrap around
+        } while (startIdx != index);
+        return null;
     }
 
     private void populate() {
+        // empty method that will be specified in subclasses
+    }
 
+    public Agent[] getAgents() {
+        return agents.toArray(new Agent[0]);
     }
 
     private class ClockUpdater extends TimerTask {

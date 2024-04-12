@@ -15,5 +15,12 @@ public abstract class Agent implements Runnable, Serializable {
         this.name = name;
     }
 
+    // Pythagorean theorem to calculate distance between two agents
+    public double distance(Agent other) {
+        int deltaX = this.xc - other.xc;
+        int deltaY = this.yc - other.yc;
+        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    }
+
 
 }

@@ -2,7 +2,7 @@ package mvc;
 
 
 public abstract class Command {
-    private Model model;
+    protected Model model;
     public Command(Model m){
         model=m;
     }

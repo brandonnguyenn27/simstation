@@ -66,11 +66,23 @@ public abstract class Agent implements Runnable, Serializable {
     public void setHeading(Heading heading) {
         this.heading = heading;
     }
+    public void setXc(int xc) {
+        this.xc = xc;
+    }
+    public void setYc(int yc) {
+        this.yc = yc;
+    }
     public void setSimulation(Simulation world) {
         this.world = world;
     }
     public Heading getHeading() {
         return heading;
+    }
+    public int getXc() {
+        return this.xc;
+    }
+    public int getYc() {
+        return this.yc;
     }
     // Pythagorean theorem to calculate distance between two agents
     public double distance(Agent other) {

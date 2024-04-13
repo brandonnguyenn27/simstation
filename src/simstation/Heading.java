@@ -21,4 +21,7 @@ public enum Heading {
         if (luck == 2) return EAST;
         return WEST;
     }
+    public Heading getHeading() {
+        return random();
+    }
 }

@@ -9,7 +9,7 @@ public class Simulation extends Model {
     protected static int SIZE = 250;
     transient private Timer timer;
     private int clock;
-    private ArrayList<Agent> agents;
+    private List<Agent> agents;
     private boolean running;
     private boolean suspended;
 
@@ -17,7 +17,7 @@ public class Simulation extends Model {
         super();
         running = false;
         suspended = false;
-        agents = new ArrayList<>();
+        agents = new LinkedList<Agent>();
         clock = 0;
 
     }
@@ -80,9 +80,16 @@ public class Simulation extends Model {
     }
 
     public synchronized Agent getNeighbor(Agent a, double radius) {
-        for (Agent other : agents) {
-            if (other != a && a.distance(other) < radius) {
-                return other;
+        int startIndex = Utilities.rng.nextInt(agents.size());
+        int index = startIndex;
+        while (true) {
+            Agent neighbor = agents.get(index);
+            if (a.distance(neighbor) < radius && !a.equals(neighbor)) {
+                return neighbor;
+            }
+            index = (index + 1) % agents.size(); //wrap around
+            if (index == startIndex) {
+                break;
             }
         }
         return null;
@@ -92,7 +99,7 @@ public class Simulation extends Model {
         // empty method that will be specified in subclasses
     }
 
-    public ArrayList<Agent> getAgents() {
+    public List<Agent> getAgents() {
         return agents;
     }
 

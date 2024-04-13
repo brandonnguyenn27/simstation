@@ -13,6 +13,7 @@ public abstract class Agent implements Runnable, Serializable {
     public abstract void update();
     public Agent(String name) {
         this.name = name;
+        heading = heading.random(); // Will set heading to random direction
     }
     public void run() {
         while (!stopped) {
@@ -46,7 +47,21 @@ public abstract class Agent implements Runnable, Serializable {
         suspended = false;
     }
     public void move(int steps) {
-
+        switch (heading) {
+            case NORTH:
+                yc -= steps;
+                break;
+            case SOUTH:
+                yc += steps;
+                break;
+            case EAST:
+                xc += steps;
+                break;
+            case WEST:
+                xc -= steps;
+                break;
+        }
+        world.changed();
     }
     public void setHeading(Heading heading) {
         this.heading = heading;

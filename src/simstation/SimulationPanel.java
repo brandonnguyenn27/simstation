@@ -4,6 +4,7 @@ import mvc.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class SimulationPanel extends AppPanel {
 
@@ -35,12 +36,12 @@ public class SimulationPanel extends AppPanel {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-        if ("Start".equals(command)) {
-        } else if ("Suspend".equals(command)) {
-        } else if ("Resume".equals(command)) {
-        } else if ("Stop".equals(command)) {
-        } else if ("Stats".equals(command)) {
+        Simulation simulation = (Simulation) model;
+        if ((command == "Save" || command == "SaveAs") && simulation.running() && !simulation.suspended()) {
+            Utilities.error("Simulation must be suspended before saving");
+            return;
         }
+
     }
 
 }

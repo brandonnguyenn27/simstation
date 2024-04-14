@@ -41,7 +41,7 @@ public class SimulationPanel extends AppPanel {
             Utilities.error("Simulation must be suspended before saving");
             return;
         }
-
+        super.actionPerformed(e);
     }
 
 }

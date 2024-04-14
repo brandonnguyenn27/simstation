@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public abstract class Agent implements Runnable, Serializable {
     private String name;
-    private Heading heading;
-    private Simulation world;
+    protected Heading heading;
+    protected Simulation world;
     public int xc, yc; // Made public
     private boolean suspended = false;
     private boolean stopped = false;
@@ -13,7 +13,13 @@ public abstract class Agent implements Runnable, Serializable {
     public abstract void update();
     public Agent(String name) {
         this.name = name;
-        heading = heading.random(); // Will set heading to random direction
+        heading = Heading.random(); // Will set heading to random direction
+    }
+    public Agent() {
+        super();
+        suspended = false;
+        stopped = false;
+        myThread = null;
     }
     public void run() {
         while (!stopped) {

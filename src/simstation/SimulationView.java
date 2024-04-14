@@ -11,6 +11,14 @@ public class SimulationView extends View {
         this.setBackground(Color.GRAY);
     }
 
+    protected void drawAgents(Graphics g) {
+        Simulation simulation = (Simulation) model;
+        int offset = AGENT_SIZE / 2;
+        for (Agent a : simulation.getAgents()) {
+            g.setColor(Color.WHITE);
+            g.fillOval(a.getXc() - offset, a.getYc() - offset, AGENT_SIZE, AGENT_SIZE);
+        }
+    }
 
     public void paintComponent(Graphics gc) {
         super.paintComponent(gc);
@@ -18,9 +26,6 @@ public class SimulationView extends View {
         gc.setColor(Color.BLACK);
         gc.drawRect(0, 0, simulation.SIZE, simulation.SIZE);
         int offset = AGENT_SIZE / 2;
-        for (Agent a : simulation.getAgents()) {
-            gc.setColor(Color.WHITE);
-            gc.fillOval(a.getXc() - offset, a.getYc() - offset, AGENT_SIZE, AGENT_SIZE);
-        }
+        drawAgents(gc);
     }
 }

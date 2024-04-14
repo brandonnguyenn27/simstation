@@ -3,7 +3,6 @@ package simstation;
 import mvc.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class SimulationPanel extends AppPanel {
@@ -37,7 +36,7 @@ public class SimulationPanel extends AppPanel {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         Simulation simulation = (Simulation) model;
-        if ((command == "Save" || command == "SaveAs") && simulation.running() && !simulation.suspended()) {
+        if ((command.equals("Save") || command.equals("SaveAs")) && simulation.running() && !simulation.suspended()) {
             Utilities.error("Simulation must be suspended before saving");
             return;
         }

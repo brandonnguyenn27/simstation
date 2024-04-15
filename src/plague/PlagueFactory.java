@@ -17,10 +17,21 @@ public class PlagueFactory extends SimStationFactory {
         public PlagueStatsCommand(Model model) {
             super(model);
         }
+        @Override
         protected String[] stats() {
+            //String[] defaultStats = super.stats();
             PlagueSimulation simulation = (PlagueSimulation) model;
-            return new String[]{"agents = " + simulation.getAgentsSize(), "clock = " + simulation.getClock()};
+            String infectPop = simulation.stats();
+            return new String[]{"agents = " + simulation.getAgentsSize(), "clock = " + simulation.getClock(), infectPop};
         }
     }
-
+    @Override
+    public Command makeEditCommand(Model model, String type, Object source) {
+        switch (type) {
+            case "Stats":
+                return new PlagueStatsCommand(model);
+            default:
+                return super.makeEditCommand(model, type, source);
+        }
+    }
 }

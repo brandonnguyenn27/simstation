@@ -6,6 +6,7 @@ public class PlagueSimulation extends Simulation {
     private static int VIRULENCE = 50; // % chance of infection 50
     private static int RESISTANCE = 2; // % chance of resisting infection 2
     private static int POPULATION = 15;
+    private static int INFECTED = 0;
     public static final int CHANCE = 100;
     public void populate() {
         for(int i = 0; i < POPULATION; i++)
@@ -20,6 +21,7 @@ public class PlagueSimulation extends Simulation {
                     int infectionChance = Utilities.rng.nextInt(CHANCE);
                     if (infectionChance < VIRULENCE) {
                         a.setInfected(true);
+                        INFECTED++;
                     }
                 }
             }
@@ -33,6 +35,7 @@ public class PlagueSimulation extends Simulation {
                     int infectionChance = Utilities.rng.nextInt(CHANCE);
                     if (infectionChance < VIRULENCE) {
                         neighbor.setInfected(true);
+                        INFECTED++;
                     }
                 }
             }
@@ -42,6 +45,10 @@ public class PlagueSimulation extends Simulation {
     private boolean isSusceptible(Agent agent) {
         int resistanceChance = Utilities.rng.nextInt(CHANCE);
         return resistanceChance >= RESISTANCE; // If resistance chance is greater than or equal to resistance factor, agent is susceptible
+    }
+    public synchronized String stats() {
+        double percentInf = Math.ceil(((double) INFECTED / POPULATION) * 100.0);
+        return "% infected: " + percentInf;
     }
 
     public static void main(String[] args) {

@@ -27,16 +27,12 @@ public abstract class Agent implements Runnable, Serializable {
         myThread = Thread.currentThread();
         onStart();
         while (!stopped) {
-            if (!suspended) {
-                update();
-            }
             try {
                 update();
                 Thread.sleep(20);
-
+                suspended();
             } catch (InterruptedException e) {
-                onInterrupted();
-                stop();
+                Utilities.error(e);
             }
         }
         onExit();
@@ -51,13 +47,13 @@ public abstract class Agent implements Runnable, Serializable {
     }
     public synchronized void stop() {
         stopped = true;
-        myThread.interrupt();
+        //myThread.interrupt();
     }
     public synchronized void suspend() {
         suspended = true;
     }
     public synchronized void resume() {
-        suspended = false;
+        notify();
     }
     public void move(int steps) {
         switch (heading) {

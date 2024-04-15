@@ -16,38 +16,35 @@ public class PlagueSimulation extends Simulation {
     public void infectAgents() {
         for (Agent agent : getAgents()) {
             Plague a = (Plague) agent;
-            if (!a.isInfected()) {
-                if (isSusceptible(agent)) {
-                    int infectionChance = Utilities.rng.nextInt(CHANCE);
-                    if (infectionChance < VIRULENCE) {
+            if (!a.isInfected() && isSusceptible(agent)) {
+                    if (shouldInfect()) {
                         a.setInfected(true);
                         INFECTED++;
                     }
                 }
             }
-        }
     }
     // This method tries to infect an infected Agent's neighbor.
     public void infectNeighbor(Plague agent, Plague neighbor) {
-        if(agent.isInfected()) {
-            if(!neighbor.isInfected()) {
-                if (isSusceptible(neighbor)) {
-                    int infectionChance = Utilities.rng.nextInt(CHANCE);
-                    if (infectionChance < VIRULENCE) {
-                        neighbor.setInfected(true);
-                        INFECTED++;
-                    }
-                }
+        if(agent.isInfected() && !neighbor.isInfected() && isSusceptible(neighbor)) {
+            if (shouldInfect()) {
+                neighbor.setInfected(true);
+                INFECTED++;
             }
         }
     }
     // Method to determine if an agent is susceptible to infection
     private boolean isSusceptible(Agent agent) {
         int resistanceChance = Utilities.rng.nextInt(CHANCE);
-        return resistanceChance >= RESISTANCE; // If resistance chance is greater than or equal to resistance factor, agent is susceptible
+        return resistanceChance >= RESISTANCE;
+    }
+    // Method to determine infection chance
+    private boolean shouldInfect() {
+        int infectionChance = Utilities.rng.nextInt(CHANCE);
+        return infectionChance < VIRULENCE;
     }
     public synchronized String stats() {
-        double percentInf = Math.ceil(((double) INFECTED / POPULATION) * 100.0);
+        double percentInf = Math.ceil(((double) INFECTED / POPULATION) * CHANCE);
         return "% infected: " + percentInf;
     }
 

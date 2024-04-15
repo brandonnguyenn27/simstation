@@ -1,14 +1,5 @@
 package randomwalk;
 
-//<<<<<<< HEAD
-//import mvc.*;
-//import simstation.*;
-//import java.awt.*;
-//import java.util.Iterator;
-//
-//public class RandomWalkSimulation extends Simulation{
-//    @Override
-//=======
 import simstation.Simulation;
 import mvc.*;
 import simstation.SimulationPanel;

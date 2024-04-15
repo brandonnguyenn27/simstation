@@ -6,10 +6,6 @@ import java.io.Serializable;
 
 public abstract class Agent implements Runnable, Serializable {
     private String name;
-//<<<<<<< HEAD
-//    public Heading heading; // Changed to Public
-//    private Simulation world;
-//=======
     protected Heading heading;
     protected Simulation world;
     public int xc, yc; // Made public
@@ -17,10 +13,6 @@ public abstract class Agent implements Runnable, Serializable {
     private boolean stopped = false;
     transient protected Thread myThread;
     public abstract void update();
-//    public Agent() { // Added constructor
-//        this.name = "Random Agent";
-//        heading = heading.random(); // Will set heading to random direction
-//    }
     public Agent(String name) {
         this();
         this.name = name;

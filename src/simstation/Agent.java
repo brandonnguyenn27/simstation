@@ -62,16 +62,16 @@ public abstract class Agent implements Runnable, Serializable {
     public void move(int steps) {
         switch (heading) {
             case NORTH:
-                yc -= steps;
+                yc =  (yc - steps + Simulation.SIZE) % Simulation.SIZE; // added calculation so that agent wraps around the world, not sure if it actually works
                 break;
             case SOUTH:
-                yc += steps;
+                yc = (yc + steps + Simulation.SIZE) % Simulation.SIZE;
                 break;
             case EAST:
-                xc += steps;
+                xc = (xc + steps + Simulation.SIZE) % Simulation.SIZE;
                 break;
             case WEST:
-                xc -= steps;
+                xc = (xc - steps + Simulation.SIZE) % Simulation.SIZE;
                 break;
         }
         world.changed();

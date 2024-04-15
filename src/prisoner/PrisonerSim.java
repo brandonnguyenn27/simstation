@@ -38,20 +38,22 @@ public class PrisonerSim extends Simulation {
         double randomlyCooperate = 0;
         double cheat = 0;
         double tit4tat = 0;
+
         for (Agent a : this.getAgents()) {
             Prisoner p = (Prisoner) a;
+            double avgFitness = p.getFitness() / (double)PRISONERS_PER_STRAT;
             switch (p.getStrategy().getType()) {
                 case COOPERATE:
-                    cooperate++;
+                    cooperate += avgFitness;
                     break;
                 case RANDOMLY_COOPERATE:
-                    randomlyCooperate++;
+                    randomlyCooperate += avgFitness;
                     break;
                 case CHEAT:
-                    cheat++;
+                    cheat += avgFitness;
                     break;
                 case TIT4TAT:
-                    tit4tat++;
+                    tit4tat += avgFitness;
                     break;
             }
         }

@@ -5,8 +5,7 @@ import mvc.Utilities;
 
 import java.util.*;
 public class Simulation extends Model {
-
-    protected static int SIZE = 250;
+    protected final static int SIZE = 600;
     transient private Timer timer;
     private int clock;
     private List<Agent> agents;
@@ -32,16 +31,17 @@ public class Simulation extends Model {
     }
 
     public void start() {
-        this.clock = 0;
-        populate();
+        clock = 0;
         startTimer();
-        //agents.clear(); // Why agents.clear here??? If this is here it won't show any Agents on the panel at all.
+        agents.clear();
+        populate();
         for (Agent a : agents) {
             a.start();
         }
         running = true;
         suspended = false;
         changed();
+        System.out.println(this.agents.size());
     }
 
     public void suspend() {
@@ -95,7 +95,8 @@ public class Simulation extends Model {
         return null;
     }
 
-    public void populate() { // Made populate public
+
+    public void populate() {
         // empty method that will be specified in subclasses
     }
 

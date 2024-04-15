@@ -14,6 +14,8 @@ public class StartCommand extends Command {
         if (simulation.running()) {
             Utilities.inform("Simulation is already running");
         }
-        simulation.start();
+        else {
+            simulation.start();
+        }
     }
 }

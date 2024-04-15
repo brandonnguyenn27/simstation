@@ -10,6 +10,8 @@ public class StopCommand extends Command {
         if (!simulation.running()) {
             Utilities.inform("Simulation is already stopped");
         }
-        simulation.stop();
+        else {
+            simulation.stop();
+        }
     }
 }

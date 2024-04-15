@@ -5,7 +5,6 @@ import mvc.*;
 import simstation.SimulationPanel;
 
 public class RandomWalkSimulation extends Simulation {
-
     public void populate() {
         for(int i = 0; i < 15; i++)
             addAgent(new Drunk());
@@ -15,5 +14,4 @@ public class RandomWalkSimulation extends Simulation {
         AppPanel panel = new SimulationPanel(new RandomWalkFactory());
         panel.display();
     }
-
 }

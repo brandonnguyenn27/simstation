@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+
 public class SimulationPanel extends AppPanel {
 
     public SimulationPanel(AppFactory factory) {

@@ -28,7 +28,6 @@ public abstract class Agent implements Runnable, Serializable {
         onStart();
         while (!stopped) {
             try {
-                update();
                 Thread.sleep(20);
                 suspended();
             } catch (InterruptedException e) {
@@ -42,6 +41,7 @@ public abstract class Agent implements Runnable, Serializable {
     public synchronized void start() {
         stopped = false;
         suspended = false;
+        //world.populate();
         myThread = new Thread(this);
         myThread.start();
     }
@@ -55,22 +55,47 @@ public abstract class Agent implements Runnable, Serializable {
     public synchronized void resume() {
         notify();
     }
+//    public void move(int steps) {
+//        switch (heading) {
+//            case NORTH:
+//                yc -= steps;
+//                break;
+//            case SOUTH:
+//                yc += steps;
+//                break;
+//            case EAST:
+//                xc += steps;
+//                break;
+//            case WEST:
+//                xc -= steps;
+//                break;
+//        }
+//        world.changed();
+//    }
+    // Updated move() method so that it is within world.SIZE border
     public void move(int steps) {
+        int newXc = xc;
+        int newYc = yc;
         switch (heading) {
             case NORTH:
-                yc =  (yc - steps + Simulation.SIZE) % Simulation.SIZE; // added calculation so that agent wraps around the world, not sure if it actually works
+                newYc = Math.max(0, yc - steps); // Ensure newYc doesn't go below 0
                 break;
             case SOUTH:
-                yc = (yc + steps + Simulation.SIZE) % Simulation.SIZE;
+                newYc = Math.min(world.SIZE, yc + steps); // Ensure newYc doesn't go above simulation size
                 break;
             case EAST:
-                xc = (xc + steps + Simulation.SIZE) % Simulation.SIZE;
+                newXc = Math.min(world.SIZE, xc + steps); // Ensure newXc doesn't go above simulation size
                 break;
             case WEST:
-                xc = (xc - steps + Simulation.SIZE) % Simulation.SIZE;
+                newXc = Math.max(0, xc - steps); // Ensure newXc doesn't go below 0
                 break;
         }
-        world.changed();
+        // Update the position only if it's within the boundaries
+        if (newXc >= 0 && newXc <= world.SIZE && newYc >= 0 && newYc <= world.SIZE) {
+            xc = newXc;
+            yc = newYc;
+            world.changed();
+        }
     }
 
     public synchronized void suspended() {

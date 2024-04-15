@@ -16,8 +16,13 @@ public class PrisonerFactory extends SimStationFactory {
 
     @Override
     public String[] getHelp() {
-        return new String[] {"Cooperate or Defect"};
+        return new String[] {"Prisoner's Dilemma:", "Press Start to start the simulation.",
+                "Press Suspend to pause the simulation while it is running.",
+                "Press Resume to resume the simulation after it has been suspended.",
+                "Press Stop to stop the simulation.",
+                "Press Stats to view the statistics of the simulation."};
     }
+
 
     @Override
     public PrisonerView makeView(Model m) {

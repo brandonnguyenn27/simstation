@@ -12,7 +12,7 @@ public class StartCommand extends Command {
     public void execute() {
         Simulation simulation = (Simulation)model;
         if (simulation.running()) {
-            Utilities.inform("Simulation is already running");
+            Utilities.inform("Simulation is already running. Stop the simulation first if you wish to make a new instance.");
         }
         else {
             simulation.start();

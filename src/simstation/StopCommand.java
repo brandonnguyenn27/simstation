@@ -8,7 +8,7 @@ public class StopCommand extends Command {
     public void execute() {
         Simulation simulation = (Simulation)model;
         if (!simulation.running()) {
-            Utilities.inform("Simulation is already stopped");
+            Utilities.inform("Simulation is already stopped. Start the simulation again if you want to continue.");
         }
         else {
             simulation.stop();

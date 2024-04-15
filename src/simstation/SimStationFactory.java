@@ -25,7 +25,7 @@ public class SimStationFactory implements AppFactory {
     }
 
     public String about() {
-        return "SimStation Simulation";
+        return "Simstation: Prisoner's Dilemma \nBrandon Nguyen, Charles Manaois, Hruday Prathipati\n 2024";
     }
 
     public String[] getEditCommands() {

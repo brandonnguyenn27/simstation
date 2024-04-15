@@ -4,13 +4,17 @@ import java.io.Serializable;
 
 public abstract class Agent implements Runnable, Serializable {
     private String name;
-    private Heading heading;
+    public Heading heading; // Changed to Public
     private Simulation world;
     public int xc, yc; // Made public
     private boolean suspended = false;
     private boolean stopped = false;
     transient protected Thread myThread;
     public abstract void update();
+    public Agent() { // Added constructor
+        this.name = "Random Agent";
+        heading = heading.random(); // Will set heading to random direction
+    }
     public Agent(String name) {
         this.name = name;
         heading = heading.random(); // Will set heading to random direction
@@ -33,6 +37,7 @@ public abstract class Agent implements Runnable, Serializable {
     public void start() {
         stopped = false;
         suspended = false;
+        //world.populate();
         myThread = new Thread(this);
         myThread.start();
     }
@@ -46,22 +51,47 @@ public abstract class Agent implements Runnable, Serializable {
     public void resume() {
         suspended = false;
     }
+//    public void move(int steps) {
+//        switch (heading) {
+//            case NORTH:
+//                yc -= steps;
+//                break;
+//            case SOUTH:
+//                yc += steps;
+//                break;
+//            case EAST:
+//                xc += steps;
+//                break;
+//            case WEST:
+//                xc -= steps;
+//                break;
+//        }
+//        world.changed();
+//    }
+    // Updated move() method so that it is within world.SIZE border
     public void move(int steps) {
+        int newXc = xc;
+        int newYc = yc;
         switch (heading) {
             case NORTH:
-                yc -= steps;
+                newYc = Math.max(0, yc - steps); // Ensure newYc doesn't go below 0
                 break;
             case SOUTH:
-                yc += steps;
+                newYc = Math.min(world.SIZE, yc + steps); // Ensure newYc doesn't go above simulation size
                 break;
             case EAST:
-                xc += steps;
+                newXc = Math.min(world.SIZE, xc + steps); // Ensure newXc doesn't go above simulation size
                 break;
             case WEST:
-                xc -= steps;
+                newXc = Math.max(0, xc - steps); // Ensure newXc doesn't go below 0
                 break;
         }
-        world.changed();
+        // Update the position only if it's within the boundaries
+        if (newXc >= 0 && newXc <= world.SIZE && newYc >= 0 && newYc <= world.SIZE) {
+            xc = newXc;
+            yc = newYc;
+            world.changed();
+        }
     }
     public void setHeading(Heading heading) {
         this.heading = heading;

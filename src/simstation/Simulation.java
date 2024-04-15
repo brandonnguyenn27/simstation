@@ -35,7 +35,7 @@ public class Simulation extends Model {
         this.clock = 0;
         populate();
         startTimer();
-        agents.clear();
+        //agents.clear(); // Why agents.clear here??? If this is here it won't show any Agents on the panel at all.
         for (Agent a : agents) {
             a.start();
         }
@@ -95,7 +95,7 @@ public class Simulation extends Model {
         return null;
     }
 
-    private void populate() {
+    public void populate() { // Made populate public
         // empty method that will be specified in subclasses
     }
 

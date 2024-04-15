@@ -36,10 +36,20 @@ public class SimulationPanel extends AppPanel {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         if ("Start".equals(command)) {
+            Command startCommand = factory.makeEditCommand(model, "Start", this);
+            startCommand.execute();
         } else if ("Suspend".equals(command)) {
+            Command suspendCommand = factory.makeEditCommand(model, "Suspend", this);
+            suspendCommand.execute();
         } else if ("Resume".equals(command)) {
+            Command resumeCommand = factory.makeEditCommand(model, "Resume", this);
+            resumeCommand.execute();
         } else if ("Stop".equals(command)) {
+            Command stopCommand = factory.makeEditCommand(model, "Stop", this);
+            stopCommand.execute();
         } else if ("Stats".equals(command)) {
+            Command statsCommand = factory.makeEditCommand(model, "Stats", this);
+            statsCommand.execute();
         }
     }
 

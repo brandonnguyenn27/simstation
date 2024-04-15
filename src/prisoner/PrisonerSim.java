@@ -4,6 +4,7 @@ import simstation.*;
 import mvc.*;
 public class PrisonerSim extends Simulation {
     private static final int PRISONERS_PER_STRAT = 10;
+
     public void populate() {
         for (int i = 0; i < PRISONERS_PER_STRAT; i++) {
             for (int j = 0; j < Strategy.COUNT; j++) {

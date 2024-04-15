@@ -1,5 +1,7 @@
 package simstation;
 
+import mvc.Utilities;
+
 import java.io.Serializable;
 
 public abstract class Agent implements Runnable, Serializable {
@@ -12,8 +14,8 @@ public abstract class Agent implements Runnable, Serializable {
     transient protected Thread myThread;
     public abstract void update();
     public Agent(String name) {
+        this();
         this.name = name;
-        heading = Heading.random(); // Will set heading to random direction
     }
     public Agent() {
         super();
@@ -22,13 +24,16 @@ public abstract class Agent implements Runnable, Serializable {
         myThread = null;
     }
     public void run() {
+        myThread = Thread.currentThread();
+        onStart();
         while (!stopped) {
-            onStart();
             if (!suspended) {
                 update();
             }
             try {
+                update();
                 Thread.sleep(20);
+
             } catch (InterruptedException e) {
                 onInterrupted();
                 stop();
@@ -36,20 +41,22 @@ public abstract class Agent implements Runnable, Serializable {
         }
         onExit();
     }
-    public void start() {
+
+
+    public synchronized void start() {
         stopped = false;
         suspended = false;
         myThread = new Thread(this);
         myThread.start();
     }
-    public void stop() {
+    public synchronized void stop() {
         stopped = true;
         myThread.interrupt();
     }
-    public void suspend() {
+    public synchronized void suspend() {
         suspended = true;
     }
-    public void resume() {
+    public synchronized void resume() {
         suspended = false;
     }
     public void move(int steps) {
@@ -68,6 +75,18 @@ public abstract class Agent implements Runnable, Serializable {
                 break;
         }
         world.changed();
+    }
+
+    public synchronized void suspended() {
+        try {
+            while (!stopped && suspended) {
+                onInterrupted();
+                wait();
+                suspended = false;
+            }
+        } catch (InterruptedException e) {
+            Utilities.error(e);
+        }
     }
     public void setHeading(Heading heading) {
         this.heading = heading;

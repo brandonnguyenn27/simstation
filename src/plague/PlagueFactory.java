@@ -11,9 +11,16 @@ public class PlagueFactory extends SimStationFactory {
     public PlagueView makeView(Model m) {
         return new PlagueView(m);
     }
-//    @Override
-//    public Model makeModel() {
-//        return new PlagueSimulation();
-//    }
     public String getTitle() { return "Plague";}
+    class PlagueStatsCommand extends StatsCommand {
+
+        public PlagueStatsCommand(Model model) {
+            super(model);
+        }
+        protected String[] stats() {
+            PlagueSimulation simulation = (PlagueSimulation) model;
+            return new String[]{"agents = " + simulation.getAgentsSize(), "clock = " + simulation.getClock()};
+        }
+    }
+
 }

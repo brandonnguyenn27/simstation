@@ -3,11 +3,12 @@ import simstation.*;
 import mvc.*;
 
 public class PlagueSimulation extends Simulation {
-    public static int VIRULENCE = 50; // % chance of infection 50
-    public static int RESISTANCE = 2; // % chance of resisting infection 2
+    private static int VIRULENCE = 50; // % chance of infection 50
+    private static int RESISTANCE = 2; // % chance of resisting infection 2
+    private static int POPULATION = 15;
     public static final int CHANCE = 100;
     public void populate() {
-        for(int i = 0; i < 15; i++)
+        for(int i = 0; i < POPULATION; i++)
             addAgent(new Plague());
         infectAgents(); // Infect random agents in the World
     }

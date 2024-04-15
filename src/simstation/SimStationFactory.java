@@ -1,6 +1,7 @@
 package simstation;
 
 import mvc.AppFactory;
+import mvc.Command;
 import mvc.Model;
 import mvc.View;
 
@@ -31,19 +32,20 @@ public class SimStationFactory implements AppFactory {
     }
 
     @Override
-    public simstation.Command makeEditCommand(Model model, String type, Object source) {
-        if ("Start".equals(type)) {
-            return new StartCommand(model);
-        } else if ("Suspend".equals(type)) {
-            return new SuspendCommand(model);
-        } else if ("Resume".equals(type)) {
-            return new ResumeCommand(model);
-        } else if ("Stop".equals(type)) {
-            return new StopCommand(model);
-        } else if ("Stats".equals(type)) {
-            return new StatsCommand(model);
-        } else {
-            return null;
+    public Command makeEditCommand(Model model, String type, Object source) {
+        switch (type) {
+            case "Start":
+                return new StartCommand(model);
+            case "Suspend":
+                return new SuspendCommand(model);
+            case "Resume":
+                return new ResumeCommand(model);
+            case "Stop":
+                return new StopCommand(model);
+            case "Stats":
+                return new StatsCommand(model);
+            default:
+                return null;
         }
     }
 }

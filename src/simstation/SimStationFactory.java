@@ -3,6 +3,7 @@ package simstation;
 import mvc.AppFactory;
 import mvc.Model;
 import mvc.View;
+import mvc.*;
 
 public class SimStationFactory implements AppFactory {
 
@@ -31,7 +32,7 @@ public class SimStationFactory implements AppFactory {
     }
 
     @Override
-    public simstation.Command makeEditCommand(Model model, String type, Object source) {
+    public Command makeEditCommand(Model model, String type, Object source) { // simstation.Command originally???
         if ("Start".equals(type)) {
             return new StartCommand(model);
         } else if ("Suspend".equals(type)) {

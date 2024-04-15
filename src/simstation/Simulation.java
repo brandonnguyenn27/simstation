@@ -95,6 +95,7 @@ public class Simulation extends Model {
         return null;
     }
 
+
     public void populate() {
         // empty method that will be specified in subclasses
     }

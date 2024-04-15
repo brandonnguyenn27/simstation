@@ -1,10 +1,9 @@
 package randomwalk;
-
 import mvc.Utilities;
 import simstation.Agent;
 import simstation.Heading;
 
-class Drunk extends Agent {
+public class Drunk extends Agent {
 
     public Drunk() {
         super();
@@ -16,5 +15,4 @@ class Drunk extends Agent {
         int steps = Utilities.rng.nextInt(10) + 1;
         move(steps);
     }
-
 }

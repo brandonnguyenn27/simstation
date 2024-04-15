@@ -2,6 +2,7 @@ package prisoner;
 
 import simstation.*;
 import mvc.*;
+import java.text.DecimalFormat;
 public class PrisonerSim extends Simulation {
     private static final int PRISONERS_PER_STRAT = 10;
 
@@ -57,10 +58,11 @@ public class PrisonerSim extends Simulation {
                     break;
             }
         }
-        msg[0] = "Cooperate average fitness = " + cooperate;
-        msg[1] = "Randomly-Cooperate average fitness = " + randomlyCooperate;
-        msg[2] = "Cheat average fitness = " + cheat;
-        msg[3] = "Tit4Tat average fitness = " + tit4tat;
+        DecimalFormat df = new DecimalFormat("#.##");
+        msg[0] = "Cooperate average fitness = " + Double.parseDouble(df.format(cooperate));
+        msg[1] = "Randomly-Cooperate average fitness = " + Double.parseDouble(df.format(randomlyCooperate));
+        msg[2] = "Cheat average fitness = " + Double.parseDouble(df.format(cheat));
+        msg[3] = "Tit4Tat average fitness = " + Double.parseDouble(df.format(tit4tat));
 
         return msg;
     }

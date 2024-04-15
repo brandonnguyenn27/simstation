@@ -11,6 +11,7 @@ public class SimulationPanel extends AppPanel {
         super(factory);
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 
+
         JButton startButton = new JButton("Start");
         startButton.addActionListener(this);
         controlPanel.add(startButton);

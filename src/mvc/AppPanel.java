@@ -33,6 +33,7 @@ public class AppPanel extends JPanel implements ActionListener, Subscriber {
         model.subscribe(this);
 
         frame = new SafeFrame();
+        frame.setResizable(false);
         Container cp = frame.getContentPane();
         cp.add(this);
         frame.setJMenuBar(createMenuBar());

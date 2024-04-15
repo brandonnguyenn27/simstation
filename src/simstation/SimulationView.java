@@ -5,7 +5,7 @@ import mvc.*;
 import java.awt.*;
 
 public class SimulationView extends View {
-    protected final static int AGENT_SIZE = 6;
+    protected final static int AGENT_SIZE = 5;
 
     public SimulationView(Model model) {
         super(model);

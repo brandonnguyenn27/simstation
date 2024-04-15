@@ -59,24 +59,26 @@ public class Prisoner extends Agent {
     }
 
     public void play(Prisoner partner) {
-        boolean myCoop = cooperate();
-        boolean partnerCoop = partner.cooperate();
-        if (myCoop && partnerCoop) {
-            updateFitness(3);
-            partner.updateFitness(3);
-        } else if (myCoop) {
-            updateFitness(0);
-            partner.updateFitness(5);
-            partner.setPartnerCheated(true);
-        } else if (partnerCoop) {
-            updateFitness(5);
-            partner.updateFitness(0);
-            partner.setPartnerCheated(true);
+        boolean selfCooperate = cooperate();
+        boolean partnerCooperates = partner.cooperate();
+        if (selfCooperate) {
+            if (partnerCooperates) {
+                updateFitness(3);
+                partner.updateFitness(3);
+            } else {
+                updateFitness(0);
+                partner.updateFitness(5);
+            }
         } else {
-            updateFitness(1);
-            partner.updateFitness(1);
+            if (partnerCooperates) {
+                updateFitness(5);
+                partner.updateFitness(0);
+            } else {
+                updateFitness(1);
+                partner.updateFitness(1);
+            }
         }
-        this.partnerCheated = !partnerCoop;
-        partner.partnerCheated = !myCoop;
+        this.partnerCheated = !partnerCooperates;
+        partner.partnerCheated = !selfCooperate;
     }
 }

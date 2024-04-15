@@ -29,6 +29,11 @@ public class PrisonerFactory extends SimStationFactory {
         return new PrisonerSim();
     }
 
+    @Override
+    protected StatsCommand statsCommand(Model model) {
+        return new PrisonerStatsCommand(model);
+    }
+
     class PrisonerStatsCommand extends StatsCommand {
         public PrisonerStatsCommand(Model model) {
             super(model);

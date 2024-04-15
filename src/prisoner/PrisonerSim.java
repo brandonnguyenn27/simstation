@@ -2,6 +2,7 @@ package prisoner;
 
 import simstation.*;
 import mvc.*;
+import java.text.DecimalFormat;
 public class PrisonerSim extends Simulation {
     private static final int PRISONERS_PER_STRAT = 10;
 
@@ -38,27 +39,30 @@ public class PrisonerSim extends Simulation {
         double randomlyCooperate = 0;
         double cheat = 0;
         double tit4tat = 0;
+
         for (Agent a : this.getAgents()) {
             Prisoner p = (Prisoner) a;
+            double avgFitness = p.getFitness() / (double)PRISONERS_PER_STRAT;
             switch (p.getStrategy().getType()) {
                 case COOPERATE:
-                    cooperate++;
+                    cooperate += avgFitness;
                     break;
                 case RANDOMLY_COOPERATE:
-                    randomlyCooperate++;
+                    randomlyCooperate += avgFitness;
                     break;
                 case CHEAT:
-                    cheat++;
+                    cheat += avgFitness;
                     break;
                 case TIT4TAT:
-                    tit4tat++;
+                    tit4tat += avgFitness;
                     break;
             }
         }
-        msg[0] = "Cooperate average fitness = " + cooperate;
-        msg[1] = "Randomly-Cooperate average fitness = " + randomlyCooperate;
-        msg[2] = "Cheat average fitness = " + cheat;
-        msg[3] = "Tit4Tat average fitness = " + tit4tat;
+        DecimalFormat df = new DecimalFormat("#.##");
+        msg[0] = "Cooperate average fitness = " + Double.parseDouble(df.format(cooperate));
+        msg[1] = "Randomly-Cooperate average fitness = " + Double.parseDouble(df.format(randomlyCooperate));
+        msg[2] = "Cheat average fitness = " + Double.parseDouble(df.format(cheat));
+        msg[3] = "Tit4Tat average fitness = " + Double.parseDouble(df.format(tit4tat));
 
         return msg;
     }

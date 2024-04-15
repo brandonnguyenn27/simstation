@@ -44,9 +44,12 @@ public class SimStationFactory implements AppFactory {
             case "Stop":
                 return new StopCommand(model);
             case "Stats":
-                return new StatsCommand(model);
+                return statsCommand(model);
             default:
                 return null;
         }
+    }
+    protected StatsCommand statsCommand(Model model) {
+        return new StatsCommand(model);
     }
 }

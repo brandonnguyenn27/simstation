@@ -14,6 +14,19 @@ public class FlockingFactory extends SimStationFactory {
         return "Flocking Simulation";
     }
 
+    @Override
+    public String[] getHelp() {
+        return new String[] {"Flocking Simulation:", "Press Start to start the simulation.",
+                "Press Suspend to pause the simulation while it is running.",
+                "Press Resume to resume the simulation after it has been suspended.",
+                "Press Stop to stop the simulation.",
+                "Press Stats to view the statistics of the simulation. Returns the number of birds flying at each speed."};
+    }
+    @Override
+    public String about() {
+        return "Simstation: Flocking \nBrandon Nguyen, Charles Manaois, Hruday Prathipati\n 2024";
+    }
+
 
     @Override
     public Command makeEditCommand(Model model, String type, Object source) {

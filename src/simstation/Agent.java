@@ -25,6 +25,7 @@ public abstract class Agent implements Runnable, Serializable {
     }
     public void run() {
         myThread = Thread.currentThread();
+        suspended();
         onStart();
         while (!stopped) {
             try {
@@ -75,29 +76,23 @@ public abstract class Agent implements Runnable, Serializable {
 //    }
     // Updated move() method so that it is within world.SIZE border
     public void move(int steps) {
-        int newXc = xc;
-        int newYc = yc;
-        switch (heading) {
-            case NORTH:
-                newYc = Math.max(0, yc - steps); // Ensure newYc doesn't go below 0
-                break;
-            case SOUTH:
-                newYc = Math.min(world.SIZE, yc + steps); // Ensure newYc doesn't go above simulation size
-                break;
-            case EAST:
-                newXc = Math.min(world.SIZE, xc + steps); // Ensure newXc doesn't go above simulation size
-                break;
-            case WEST:
-                newXc = Math.max(0, xc - steps); // Ensure newXc doesn't go below 0
-                break;
-        }
-        // Update the position only if it's within the boundaries
-        if (newXc >= 0 && newXc <= world.SIZE && newYc >= 0 && newYc <= world.SIZE) {
-            xc = newXc;
-            yc = newYc;
-            world.changed();
-        }
+    int offset = 3; // half of agent size, rounded up
+    switch (heading) {
+        case NORTH:
+            yc = ((yc - steps + offset + Simulation.SIZE) % Simulation.SIZE) - offset;
+            break;
+        case SOUTH:
+            yc = ((yc + steps + offset) % Simulation.SIZE) - offset;
+            break;
+        case EAST:
+            xc = ((xc + steps + offset) % Simulation.SIZE) - offset;
+            break;
+        case WEST:
+            xc = ((xc - steps + offset + Simulation.SIZE) % Simulation.SIZE) - offset;
+            break;
     }
+    world.changed();
+}
 
     public synchronized void suspended() {
         try {

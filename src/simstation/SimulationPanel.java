@@ -5,6 +5,7 @@ import mvc.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Iterator;
 
 
 public class SimulationPanel extends AppPanel {
@@ -43,6 +44,16 @@ public class SimulationPanel extends AppPanel {
         statsButton.addActionListener(this);
         controlPanel.add(statsButton);
         controlPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+    }
+
+    @Override
+    public void setModel(Model model) {
+        super.setModel(model); // calling AppPanel.setModel(m)
+        Simulation s = (Simulation)model;
+        for (Agent a : s.getAgents()) {
+            Thread t = new Thread(a);
+            t.start();
+        }
     }
 
     @Override

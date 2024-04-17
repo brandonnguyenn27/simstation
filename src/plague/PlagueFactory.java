@@ -11,6 +11,18 @@ public class PlagueFactory extends SimStationFactory {
     public PlagueView makeView(Model m) {
         return new PlagueView(m);
     }
+    @Override
+    public String about() {
+        return "Simstation: Plague \nBrandon Nguyen, Charles Manaois, Hruday Prathipati\n 2024";
+    }
+    @Override
+    public String[] getHelp() {
+        return new String[] {"Plague Simulation:", "Press Start to start the simulation.",
+                "Press Suspend to pause the simulation while it is running.",
+                "Press Resume to resume the simulation after it has been suspended.",
+                "Press Stop to stop the simulation.",
+                "Press Stats to view the statistics of the simulation. Returns Percent Infected."};
+    }
     public String getTitle() { return "Plague";}
     class PlagueStatsCommand extends StatsCommand {
 
